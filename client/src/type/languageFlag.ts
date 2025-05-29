@@ -1,0 +1,16 @@
+export interface languageFlag {
+  english: string,
+  spanish: string,
+  french: string,
+  german: string,
+  mandarin: string,
+  japanese: string,
+  korean: string,
+  hindi: string,
+  russian: string,
+  portuguese: string,
+  arabic: string,
+  italian: string,
+  turkish: string,
+  dutch: string,
+}
