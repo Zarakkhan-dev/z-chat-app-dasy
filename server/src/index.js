@@ -17,8 +17,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "*"
-  }));
+  origin: 'https://z-chat-using-stream-frontend-zeta.vercel.app',
+  credentials: true
+}));
+
 
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRoute);
