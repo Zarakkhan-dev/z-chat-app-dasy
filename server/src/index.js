@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: `${process.env.CLIENT_URL}`,
+    origin: [process.env.CLIENT_URL, "https://z-chat-using-stream-frontend-zeta.vercel.app", "*"],
     credentials: true
   }));
 
@@ -25,14 +25,17 @@ app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRoute);
 app.use("/api/v1/chat", ChatRoute);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Chat Application API");
+});
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+//   });
+// }
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`)
