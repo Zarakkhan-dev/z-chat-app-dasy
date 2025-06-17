@@ -16,11 +16,33 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: 'https://z-chat-using-stream-frontend-zeta.vercel.app',
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'https://z-chat-using-stream-frontend-zeta.vercel.app',
+//   credentials: true
+// }));
 
+const ALLOWED_ORIGIN =
+  process.env.NODE_ENV === 'production'
+    ? 'https://z-chat-using-stream-frontend-zeta.vercel.app'
+    : '*';
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  });
+}
+
+export async function GET() {
+  return Response.json({ ok: true }, {
+    headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN },
+  });
+}
 
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRoute);
